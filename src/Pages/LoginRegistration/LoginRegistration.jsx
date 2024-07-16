@@ -34,9 +34,8 @@ const LoginRegistration = () => {
       localStorage.setItem("user-phone", res.data.user.phone);
       // Navigating to dashboard
       navigate("/dashboard");
-    }
-    else{
-      alert(res.data.message)
+    } else {
+      alert(res.data.message);
     }
   };
   const handleRegister = async (e) => {
@@ -79,6 +78,7 @@ const LoginRegistration = () => {
                     Login to your account
                   </p>
                 </div>
+                {/* Login form */}
                 <form className="flip-card__form" onSubmit={handleLogin}>
                   <input
                     className="flip-card__input"
@@ -102,8 +102,33 @@ const LoginRegistration = () => {
                   New to <span className="text-[#4b4f8f] ">Financify!</span>{" "}
                   Create an account
                 </h1>
+                {/* Register form */}
 
                 <form className="flip-card__form" onSubmit={handleRegister}>
+                  <div className="wrapperr">
+                    <div className="option">
+                      <input
+                        defaultValue="option1"
+                        name="buton"
+                        type="radio"
+                        className="input"
+                      />
+                      <div className="buton">
+                        <span className="span">User</span>
+                      </div>
+                    </div>
+                    <div className="option">
+                      <input
+                        defaultValue="option2"
+                        name="buton"
+                        type="radio"
+                        className="input"
+                      />
+                      <div className="buton">
+                        <span className="span">Agent</span>
+                      </div>
+                    </div>
+                  </div>
                   <input
                     className="flip-card__input"
                     placeholder="Name"
@@ -125,6 +150,7 @@ const LoginRegistration = () => {
                     type="email"
                     required
                   />
+
                   <input
                     className="flip-card__input"
                     name="password"

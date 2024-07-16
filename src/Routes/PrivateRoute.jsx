@@ -9,7 +9,8 @@ const PrivateRoute = () => {
   if (phone && isLoggedIn) {
     return <Dashboard />;
   }
-  return Navigate("/login-signup", { replace: true });
+  // console.log('not logged in')
+  return <Navigate to="/login-signup" replace />;
 };
 
 export default PrivateRoute;
