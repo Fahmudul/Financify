@@ -1,20 +1,16 @@
 import React, { useEffect } from "react";
 import useAxios from "../Hooks/useAxios";
+import AdminBar from "../Pages/Admin/AdminBar";
+
 
 const Dashborad = () => {
   const axiosRequest = useAxios();
-  useEffect(() => {
-    // Retrive user data from server
-    const userData = async () => {
-      const res = await axiosRequest(
-        `/user-phone?phone=${localStorage.getItem("user-phone")}`
-      );
-      const data = res.data;
-      console.log(data);
-    };
-    userData();
-  }, [axiosRequest]);
-  return <div>this is dahsboard</div>;
+ 
+  return (
+    <div className="min-h-screen bg-[#5c5e79] px-5">
+      <AdminBar />
+    </div>
+  );
 };
 
 export default Dashborad;

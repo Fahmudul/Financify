@@ -33,7 +33,7 @@ const LoginRegistration = () => {
     if (res.data.success) {
       localStorage.setItem("user-phone", res.data.user.phone);
       // Navigating to dashboard
-      navigate("/dashboard");
+      navigate("/dashboard/home");
     } else {
       alert(res.data.message);
     }
@@ -108,6 +108,7 @@ const LoginRegistration = () => {
                   <div className="wrapperr">
                     <div className="option">
                       <input
+                        defaultChecked
                         defaultValue="option1"
                         name="buton"
                         type="radio"

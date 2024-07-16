@@ -10,7 +10,7 @@ const PrivateRoute = () => {
     return <Dashboard />;
   }
   // console.log('not logged in')
-  return <Navigate to="/login-signup" replace />;
+  return <Navigate to="/" replace />;
 };
 
 export default PrivateRoute;
