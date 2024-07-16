@@ -2,7 +2,7 @@ import { Link, Outlet } from "react-router-dom";
 import { GoHome } from "react-icons/go";
 import { GrTransaction } from "react-icons/gr";
 import { FaUsersBetweenLines } from "react-icons/fa6";
-
+import { ImExit } from "react-icons/im";
 const AdminBar = () => {
   return (
     <div className="relative min-h-screen flex flex-col-reverse justify-between">
@@ -33,7 +33,7 @@ const AdminBar = () => {
       </div>
       {/* Mobile navbar */}
       <div className="lg:hidden  mb-4">
-        <ul className="flex rounded-full w-[70%] mx-auto px-2 py-1 justify-between text-3xl backdrop-blur-xl bg-white/15">
+        <ul className="flex rounded-full w-[75%] mx-auto px-2 py-1 justify-between text-3xl backdrop-blur-xl bg-white/15">
           <li className="border p-2 rounded-full bg-white text-[#5c5e79]">
             <Link to="home">
               <GoHome />
@@ -48,6 +48,9 @@ const AdminBar = () => {
             <Link to="transaction">
               <GrTransaction />
             </Link>
+          </li>
+          <li className="border p-2 rounded-full bg-white text-[#5c5e79]">
+            <ImExit />
           </li>
         </ul>
       </div>

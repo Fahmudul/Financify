@@ -1,54 +1,93 @@
-import React, { useEffect } from "react";
 import useAxios from "../../Hooks/useAxios";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { AiOutlineDelete } from "react-icons/ai";
 
 const AllUsers = () => {
   const axiosRequest = useAxios();
-  useEffect(() => {
-    // Retrive user data from server
-    const userData = async () => {
-      const res = await axiosRequest(
-        `/user-phone?phone=${localStorage.getItem("user-phone")}`
-      );
+  const {
+    data = [],
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const res = await axiosRequest(`/users`);
       const data = res.data;
       // console.log(data);
-    };
-    userData();
-  }, [axiosRequest]);
+      return data;
+    },
+  });
+
+  const { mutateAsync } = useMutation({
+    mutationFn: async (actionDetails) => {
+      // console.log(action, phone);
+      const res = await axiosRequest.patch(
+        `/accept-visitor-request/?phone=${actionDetails.phone}&action=${actionDetails.action}`
+      );
+      const data = res.data;
+      console.log(data);
+      return data;
+    },
+  });
+
+  const acceptOrReject = async (e, phone) => {
+    const action = e.target.value;
+    // console.log(action);
+    console.log(phone);
+    const actionDetails = { phone, action };
+    await mutateAsync(actionDetails);
+    refetch();
+  };
+
   return (
     <div className="">
-      <h1 className="text-lg font-medium text-center    mt-5">
+      <h1 className="text-2xl  text-white  p-2  mx-auto font-medium text-center    my-5">
         All Account Holder
       </h1>
-      <div>
+      <div className="bg-[#D3D3D3] rounded-lg">
         <div className="overflow-x-auto">
-          <table className="table">
+          <table className="table text-[#5c5e79] ">
             {/* head */}
-            <thead>
-              <tr>
+            <thead className="text-lg">
+              <tr className="">
                 <th></th>
                 <th>Name</th>
-                <th>Job</th>
-                <th>Favorite Color</th>
+                <th>Phone</th>
+                <th>Role</th>
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="text-[16px] font-semibold">
               {/* row 1 */}
-              <tr>
-                <th>1</th>
-                <td>Cy Ganderton</td>
-                <td>Quality Control Specialist</td>
-                <td>Blue</td>
-                <td>
-                  <select className="select select-bordered w-full max-w-xs">
-                    <option disabled selected>
-                      Select
-                    </option>
-                    <option>Approved</option>
-                    <option>Decline</option>
-                  </select>
-                </td>
-              </tr>
+              {data.map((user, index) => (
+                <tr key={index}>
+                  <th>{index + 1}</th>
+                  <td>{user?.name}</td>
+                  <td>{user?.phone}</td>
+                  <td>
+                    {"appliedFor" in user
+                      ? "VISITOR"
+                      : `${user?.role?.toUpperCase()}`}
+                  </td>
+                  <td>
+                    {"appliedFor" in user ? (
+                      <select
+                        className="rounded-lg py-1 px-1 shadow-md"
+                        value="activeBlock"
+                        onChange={(e) => acceptOrReject(e, user?.phone)}
+                      >
+                        <option selected>Select</option>
+                        <option value="approved">Approved</option>
+                        <option value="block">Block</option>
+                      </select>
+                    ) : (
+                      <button className="">
+                        <AiOutlineDelete className="text-3xl " />
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
