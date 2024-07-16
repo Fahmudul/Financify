@@ -2,12 +2,16 @@ import React from "react";
 import Dashboard from "../Dashboard/Dashboard";
 import { Navigate } from "react-router-dom";
 
-const PrivateRoute = () => {
+const PrivateRoute = ({ children }) => {
   // Checking user logged in
   const isLoggedIn = true;
-  const phone = localStorage.getItem("user-phone");
+  // setInterval(() => {
+  //   // console.log("hello");
+  // }, 5000);
+  const phone = localStorage.getItem("user-details");
   if (phone && isLoggedIn) {
-    return <Dashboard />;
+    console.log("logged in");
+    return children;
   }
   // console.log('not logged in')
   return <Navigate to="/" replace />;

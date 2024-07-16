@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { IoMdNotificationsOutline } from "react-icons/io";
-import "./Admin.css";
 import useAxios from "../../Hooks/useAxios";
-const AdminHome = () => {
+
+const UserHome = () => {
   const axiosRequest = useAxios();
   const [usersDetails, setUsersDetails] = useState({});
   useEffect(() => {
@@ -44,4 +44,4 @@ const AdminHome = () => {
   );
 };
 
-export default AdminHome;
+export default UserHome;

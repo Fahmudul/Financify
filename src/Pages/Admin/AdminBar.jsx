@@ -45,12 +45,17 @@ const AdminBar = () => {
             </Link>
           </li>
           <li className="border p-2 rounded-full bg-white text-[#5c5e79]">
-            <Link to="transaction">
+            <Link to="transaction-admin">
               <GrTransaction />
             </Link>
           </li>
           <li className="border p-2 rounded-full bg-white text-[#5c5e79]">
-            <ImExit />
+            <ImExit
+              onClick={() => {
+                localStorage.clear();
+                window.location.reload();
+              }}
+            />
           </li>
         </ul>
       </div>

@@ -27,9 +27,14 @@ const LoginRegistration = () => {
     );
     // console.log(res.data);
     if (res.data.success) {
-      localStorage.setItem("user-phone", res.data.user.phone);
+      localStorage.setItem("user-details", JSON.stringify(res.data.user));
+      console.log(res?.data?.user?.role);
       // Navigating to dashboard
-      navigate("/dashboard/home");
+      if (res?.data?.user?.role === "Admin") {
+        navigate("/dashboard/home");
+      } else if (res?.data?.user?.role === "Agent") {
+        navigate("/dashboard/users-home");
+      }
     } else {
       alert(res.data.message);
     }
