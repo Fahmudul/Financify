@@ -1,20 +1,45 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import "./Admin.css";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useAxios from "../../Hooks/useAxios";
+import { useQuery } from "@tanstack/react-query";
 const AdminHome = () => {
-  const axiosRequest = useAxios();
-  const [usersDetails, setUsersDetails] = useState({});
-  useEffect(() => {
-    // Retrive user data from server
-    const phone = localStorage.getItem("user-details").phone;
-    const userData = async () => {
-      const res = await axiosRequest(`/user-phone?phone=${phone}`);
+  const axiosSecure = useAxiosSecure();
+  const [localStorageData, setLocalStorageData] = useState(() => {
+    const data = localStorage.getItem("user-details");
+    return data ? JSON.parse(data) : {};
+  });
+  // console.log(localStorageData);
+
+
+  const { data: usersDetails = {} } = useQuery({
+    queryKey: ["admin", localStorageData?.phone],
+    enabled: !!localStorageData?.phone,
+
+    queryFn: async () => {
+      const res = await axiosSecure(
+        `/user-phone?phone=${localStorageData?.phone}`
+      );
       const data = res.data;
-      setUsersDetails(data);
-    };
-    userData();
-  }, [axiosRequest]);
+      // console.log(data);
+      return data;
+    },
+  });
+  // useEffect(() => {
+  //   // Retrive user data from server
+  //   // console.log(JSON.parse(localStorage.getItem("user-details")));
+  //   // console.log(phone);
+  //   const userData = async () => {
+  //     const phone = await JSON.parse(localStorage.getItem("user-details"))
+  //       .phone;
+  //     const res = await axiosRequest(`/user-phone?phone=${phone}`);
+  //     const data = res.data;
+  //     // console.log(data);
+  //     setUsersDetails(data);
+  //   };
+  //   userData();
+  // }, [axiosRequest]);
   return (
     <div className="mt-5 text-[#5c5e79]">
       {/* Balance Card */}

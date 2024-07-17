@@ -36,9 +36,9 @@ const UserPage = () => {
         </div>
         {/* Mobile navbar */}
         <div className="lg:hidden  mb-4">
-          <ul className="flex rounded-full w-[75%] mx-auto px-2 py-1 justify-between text-3xl backdrop-blur-xl bg-white/15">
+          <ul className="flex shadow-xl rounded-full w-[75%] mx-auto px-2 py-1 justify-between text-3xl backdrop-blur-xl bg-white/15">
             <li className="border p-2 rounded-full bg-white text-[#5c5e79]">
-              <Link to="/dashboard/users-home">
+              <Link to="/dashboard/user-home">
                 <GoHome />
               </Link>
             </li>

@@ -25,7 +25,6 @@ const AllUsers = () => {
         `/accept-visitor-request/?phone=${actionDetails.phone}&action=${actionDetails.action}`
       );
       const data = res.data;
-      console.log(data);
       return data;
     },
   });

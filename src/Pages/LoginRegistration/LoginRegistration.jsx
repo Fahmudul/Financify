@@ -4,6 +4,7 @@ import axios from "axios";
 import bcrypt from "bcryptjs";
 import useAxios from "../../Hooks/useAxios";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 const LoginRegistration = () => {
   const axiosRequest = useAxios();
   const navigate = useNavigate();
@@ -28,15 +29,17 @@ const LoginRegistration = () => {
     // console.log(res.data);
     if (res.data.success) {
       localStorage.setItem("user-details", JSON.stringify(res.data.user));
-      console.log(res?.data?.user?.role);
+      // Save access token in local storage
+      localStorage.setItem("access-token", res.data.accessToken);
+      console.log(res.data.user);
       // Navigating to dashboard
-      if (res?.data?.user?.role === "Admin") {
+      if (res?.data?.user?.role == "Admin") {
         navigate("/dashboard/home");
-      } else if (res?.data?.user?.role === "Agent") {
-        navigate("/dashboard/users-home");
+      } else if (res?.data?.user?.role == "User") {
+        navigate("/dashboard/user-home");
+      } else {
+        navigate("/dashboard/agent-home");
       }
-    } else {
-      alert(res.data.message);
     }
   };
   const handleRegister = async (e) => {
@@ -51,7 +54,9 @@ const LoginRegistration = () => {
     const appliedFor = form.buton.value;
     const pinRegex = /^\d{6}$/;
     if (!pinRegex.test(password)) {
-      return alert("Invalid password, password should be 6 digits number");
+      return toast.error(
+        "Invalid password, password should be 6 digits number"
+      );
     }
     const hashedPassword = bcrypt.hashSync(password, salt);
 
@@ -64,7 +69,17 @@ const LoginRegistration = () => {
       appliedFor,
     };
     // Send register credentials to server
-    const res = await axiosRequest.post(`/request-user`, registerCredentials);
+    const { data } = await axiosRequest.post(
+      `/request-user`,
+      registerCredentials
+    );
+    if (data?.result?.insertedId) {
+      toast.success(
+        "Request send successfully, please wait for admin approval"
+      );
+      localStorage.setItem("user-details", phone);
+      navigate("visitor");
+    }
   };
   return (
     <div className="bg-[#5c5e79] min-h-screen flex justify-center items-center">
