@@ -10,7 +10,6 @@ const PrivateRoute = ({ children }) => {
   // }, 5000);
   const phone = localStorage.getItem("user-details");
   if (phone && isLoggedIn) {
-    console.log("logged in");
     return children;
   }
   // console.log('not logged in')

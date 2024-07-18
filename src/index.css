@@ -2,6 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
-#agent-number::-webkit-input-placeholder {
-  color: #5c5e79;
+.scrollBarDiv ::-webkit-scrollbar {
+  width: 12px; /* Adjust the width as desired */
+}
+
+.scrollBarDiv ::-webkit-scrollbar-track {
+  background-color: #ffffff; /* White background color */
+}
+
+.scrollBarDiv ::-webkit-scrollbar-thumb {
+  background-color: #8b00ff; /* Violet color for the scrollbar thumb */
+  border-radius: 6px; /* Rounded corners for the scrollbar thumb */
+  border: 2px solid #ffffff; /* Violet border around the scrollbar thumb */
+}
+
+.scrollBarDiv ::-webkit-scrollbar-thumb:hover {
+  background-color: #6a00c7; /* Slightly darker violet color on hover */
+}
+
+.color-primary {
+  background: #e0fe10;
+}
+
+.text-new-primary {
+  color: #e0fe10;
 }

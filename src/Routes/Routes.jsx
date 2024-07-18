@@ -7,10 +7,12 @@ import AdminHome from "../Pages/Admin/AdminHome.jsx";
 import AllUsers from "../Pages/Admin/AllUsers.jsx";
 import AdminRoute from "./AdminRoute.jsx";
 import UserHome from "../Pages/UserPage/UserHome.jsx";
-import CashIn from "../Pages/UserPage/CashIn.jsx";
 import Transfer from "../Pages/Common/Transfer.jsx";
 import VisitorPage from "../Pages/VisitorPage/VisitorPage.jsx";
 import VisitorPrivateRoute from "./VisitorPrivateRoute.jsx";
+import AddMoney from "../Pages/Common/AddMoney.jsx";
+import CashInRequestPage from "../Pages/Common/CashInRequestPage.jsx";
+import CashOutRequest from "../Pages/Common/CashOutRequest.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -53,10 +55,7 @@ const router = createBrowserRouter([
         path: "user-home",
         element: <UserHome />,
       },
-      {
-        path: "cash-in",
-        element: <CashIn />,
-      },
+     
       {
         path: "transaction",
         element: <Transaction />,
@@ -71,6 +70,18 @@ const router = createBrowserRouter([
       {
         path: "agent-home",
         element: <UserHome />,
+      },
+      {
+        path: "add-money",
+        element: <AddMoney />,
+      },
+      {
+        path: "cash-in-request",
+        element: <CashInRequestPage />,
+      },
+      {
+        path: "cash-out",
+        element: <CashOutRequest />,
       },
     ],
   },

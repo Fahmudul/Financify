@@ -1,45 +1,45 @@
-import { useMutation } from "@tanstack/react-query";
 import React from "react";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import toast from "react-hot-toast";
+import { useMutation } from "@tanstack/react-query";
 
-const Transfer = () => {
+const CashOutRequest = () => {
   const axiosSecure = useAxiosSecure();
+
   const { mutateAsync } = useMutation({
-    mutationFn: async (transferDetails) => {
-      const { data } = await axiosSecure.patch("/send-money", transferDetails);
-      // console.log(data);
+    mutationFn: async (cashOutDetails) => {
+      const { data } = await axiosSecure.post("/cash-out", cashOutDetails);
       return data;
     },
-    onSuccess: () => {
-      toast.success("Transfer Successful");
-    },
-    onError: (error) => {
-      // toast.error(error.response.data.message);
-      console.log(error);
+    onSuccess: (data) => {
+      if (data.success) {
+        toast.success("Cash Out Request In Process");
+      } else {
+        toast.error(data.message);
+      }
     },
   });
-  const handleTransfer = async (e) => {
+  const handleCashOut = async (e) => {
     e.preventDefault();
-    const form = e.target;
-    const receiverNumber = form.phonenumber.value;
-    const amount = form.amount.value;
-    const pin = form.pin.value;
     const senderNumber = JSON.parse(localStorage.getItem("user-details")).phone;
-    const transferDetails = {
-      receiverNumber,
-      amount,
-      pin,
+    const form = e.target;
+    const requestedAmount = parseInt(form.amount.value);
+    const agentNumber = form.agentNumber.value;
+    const pin = form.pin.value;
+    const cashOutDetails = {
+      requestedAmount,
+      agentNumber,
       senderNumber,
+      pin,
+      request: "Cash Out",
     };
-    // console.log(receiverNumber, amount, pin, senderNumber);
-    await mutateAsync(transferDetails);
+    // console.log(cashOutDetails);
+    await mutateAsync(cashOutDetails);
   };
   return (
     <div className=" mt-5 rounded-3xl text-[#2a2b46] shadow-2xl py-5">
-      <h1 className="text-3xl font-bold text-center">Transfer</h1>
-      <form onSubmit={handleTransfer}>
-        <p className="px-2 text-xl font-semibold">Transfer amount</p>
+      <h1 className="text-3xl font-bold text-center">Cash Out</h1>
+      <form onSubmit={handleCashOut}>
         <div className="text-4xl text-[#2a2b46] flex items-center pl-2">
           <span className="font-semibold">$</span>
           <input
@@ -52,20 +52,19 @@ const Transfer = () => {
         </div>
         {/* Transfer to*/}
         <div className="mt-5 min-h-[100px] bg-white/30 mx-3 rounded-3xl py-3 px-4">
-          <p className="text-xl font-semibold">Transfer to</p>
+          <p className="text-xl font-semibold">Agent Number</p>
           <div className="text-2xl text-[#2a2b46] flex items-center ">
             <input
               type="number"
-              name="phonenumber"
+              name="agentNumber"
               required
               id="agent-number"
               className=" bg-transparent outline-none border-none text-black py-2 w-full"
-              placeholder="Enter number to transfer"
+              placeholder="Enter agentt number"
             />
           </div>
         </div>
-        <div className="mt-5 min-h-[100px] bg-white/30 mx-3 rounded-3xl py-3 px-4">
-          <p className="text-xl font-semibold">Enter your pin</p>
+        <div className="mt-5 min-h-[80px] bg-white/30 mx-3 rounded-3xl py-3 px-4">
           <div className="text-2xl text-[#2a2b46] flex items-center ">
             <input
               type="number"
@@ -73,14 +72,15 @@ const Transfer = () => {
               required
               id="agent-number"
               className=" bg-transparent outline-none border-none text-black py-2 w-full"
-              placeholder="Enter your 6 digit pin"
+              placeholder="Provide pin to confirm"
             />
           </div>
         </div>
+
         <div className="flex justify-center">
           <input
             type="submit"
-            value="Transfer"
+            value="Cash Out"
             className="btn rounded-full w-[95%] mt-5 text-xl"
           />
         </div>
@@ -89,4 +89,4 @@ const Transfer = () => {
   );
 };
 
-export default Transfer;
+export default CashOutRequest;

@@ -1,69 +1,81 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import { GoHome } from "react-icons/go";
 import { GrTransaction } from "react-icons/gr";
 import { FaUsersBetweenLines } from "react-icons/fa6";
-import { BsCashCoin } from "react-icons/bs";
+import { SiCashapp } from "react-icons/si";
 
 import { ImExit } from "react-icons/im";
+import { BsSend } from "react-icons/bs";
 const UserPage = () => {
+  const location = useLocation();
   return (
-    <div>
-      <div className="relative min-h-screen flex flex-col-reverse justify-between">
-        <div className="drawer  lg:drawer-open hidden lg:block">
-          <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-          <div className="drawer-content flex flex-col items-center justify-center">
-            {/* Page content here */}
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="mockup-phone ">
+        <div className="camera  "></div>
+        <div className="display  " style={{ height: "654px" }}>
+          <div
+            className="artboard bg-white phone-1 rounded-br-[30px]  rounded-bl-[30px] flex flex-col  justify-between items-center "
+            style={{ height: "652px" }}
+          >
+            <Outlet />
+            <div className="mb-1  w-[100%] lg:p-0 rounded-bl-[35px] pr-3 rounded-br-[35px]  ">
+              <ul className="flex w-[97%] shadow-xl  mx-auto gap-8  py-1  justify-center text-4xl rounded-bl-[35px] pr-3 rounded-br-[35px] bg-[#222222] rounded-tl-[15px] rounded-tr-[15px]">
+                <li className="  py-2">
+                  <Link
+                    to="/dashboard/user-home"
+                    className="flex flex-col items-center gap-1"
+                  >
+                    <GoHome className="text-new-primary"/>
+                    <div
+                      className={`${
+                        location?.pathname === "/dashboard/user-home"
+                          ? "w-2 h-2 color-primary text-base rounded-full"
+                          : "hidden"
+                      }`}
+                    ></div>
+                  </Link>
+                </li>
+                <li className="  py-2">
+                  <Link
+                    to="/dashboard/transfer"
+                    className="flex flex-col items-center gap-1"
+                  >
+                    <BsSend title="Cash In" className="text-new-primary"/>
+                    <div
+                      className={`${
+                        location?.pathname === "/dashboard/transfer"
+                          ? "w-2 h-2 color-primary text-base rounded-full"
+                          : "hidden"
+                      }`}
+                    ></div>
+                  </Link>
+                </li>
+                <li className=" py-2">
+                  <Link
+                    to="/dashboard/transaction"
+                    className="flex flex-col items-center gap-1"
+                  >
+                    <GrTransaction className="text-new-primary"/>
+                    <div
+                      className={`${
+                        location?.pathname === "/dashboard/transaction"
+                          ? "w-2 h-2 color-primary text-base rounded-full"
+                          : "hidden"
+                      }`}
+                    ></div>
+                  </Link>
+                </li>
+                <li className="flex flex-col items-center gap-1 py-2">
+                  <ImExit className="text-new-primary"
+                    onClick={() => {
+                      localStorage.clear();
+                      window.location.reload();
+                    }}
+                  />
+                </li>
+              </ul>
+            </div>
           </div>
-          <div className="drawer-side">
-            <label
-              htmlFor="my-drawer-2"
-              aria-label="close sidebar"
-              className="drawer-overlay"
-            ></label>
-            <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-              {/* Sidebar content here */}
-              <li>
-                <Link>Users</Link>
-              </li>
-              <li>
-                <Link>Transaction</Link>
-              </li>
-              <li>
-                <Link>Request</Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-        {/* Mobile navbar */}
-        <div className="lg:hidden  mb-4">
-          <ul className="flex shadow-xl rounded-full w-[75%] mx-auto px-2 py-1 justify-between text-3xl backdrop-blur-xl bg-white/15">
-            <li className="border p-2 rounded-full bg-white text-[#5c5e79]">
-              <Link to="/dashboard/user-home">
-                <GoHome />
-              </Link>
-            </li>
-            <li className="border p-2 rounded-full bg-white text-[#5c5e79]">
-              <Link to="/dashboard/cash-in">
-                <BsCashCoin title="Cash In" />
-              </Link>
-            </li>
-            <li className="border p-2 rounded-full bg-white text-[#5c5e79]">
-              <Link to="/dashboard/transaction">
-                <GrTransaction />
-              </Link>
-            </li>
-            <li className="border p-2 rounded-full bg-white text-[#5c5e79]">
-              <ImExit
-                onClick={() => {
-                  localStorage.clear();
-                  window.location.reload();
-                }}
-              />
-            </li>
-          </ul>
-        </div>
-        <div>
-          <Outlet />
         </div>
       </div>
     </div>

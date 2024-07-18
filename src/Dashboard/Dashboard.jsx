@@ -8,7 +8,6 @@ const Dashborad = () => {
   const axiosRequest = useAxios();
   const checkAdmin = useAdmin();
   const role = JSON.parse(localStorage.getItem("user-details")).role;
-  // console.log(checkAdmin);
   if (role !== "Admin") {
     return (
       <div className="min-h-screen bg-[#5c5e79] px-5">

@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import "./LoginRegistration.css";
 import axios from "axios";
 import bcrypt from "bcryptjs";
@@ -67,6 +66,7 @@ const LoginRegistration = () => {
       email,
       hashedPassword,
       appliedFor,
+      status: "Pending",
     };
     // Send register credentials to server
     const { data } = await axiosRequest.post(
@@ -77,8 +77,18 @@ const LoginRegistration = () => {
       toast.success(
         "Request send successfully, please wait for admin approval"
       );
-      localStorage.setItem("user-details", phone);
-      navigate("visitor");
+      localStorage.setItem(
+        "user-details",
+        JSON.stringify(data?.registeredUser)
+      );
+      // Save access token in local storage
+      localStorage.setItem("access-token", data?.accessToken);
+      console.log(data);
+      if (data?.registeredUser?.role == "User") {
+        navigate("/dashboard/user-home");
+      } else {
+        navigate("/dashboard/agent-home");
+      }
     }
   };
   return (

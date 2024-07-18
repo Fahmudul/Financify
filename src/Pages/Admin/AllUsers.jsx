@@ -32,7 +32,6 @@ const AllUsers = () => {
   const acceptOrReject = async (e, phone) => {
     const action = e.target.value;
     // console.log(action);
-    console.log(phone);
     const actionDetails = { phone, action };
     await mutateAsync(actionDetails);
     refetch();
